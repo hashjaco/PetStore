@@ -2,7 +2,7 @@ environment:
   matrix:
     - nodejs_version: "14"
   install:
-    - yarn
+    yarn
   test_script:
-    - yarn test
+    yarn test
   build: off
