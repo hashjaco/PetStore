@@ -4,7 +4,5 @@ environment:
   install:
     secure: yarn
   test_script:
-    - node -v
-    - npm -v
-    - yarn test
+    secure: node -v && npm -v && yarn test
   build: off
