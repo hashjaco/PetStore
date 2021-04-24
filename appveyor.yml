@@ -4,5 +4,5 @@ environment:
   install:
     yarn
   build: off
-  build_script:
+  test_script:
     yarn test
