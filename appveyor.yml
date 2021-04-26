@@ -4,5 +4,12 @@ environment:
   install:
     secure: yarn
   test_script:
-    secure: node -v && npm -v && yarn test
+    secure: yarn test
   build: off
+before_test:
+  - SET PGUSER=postgres
+  - SET PGPASSWORD=Password12!
+  - PATH = C:\Program Files\PostgreSQL\10\bin\;%PATH%
+  - createdb testdb
+services:
+  - postgresql10
