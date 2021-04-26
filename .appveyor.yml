@@ -2,9 +2,9 @@ environment:
   matrix:
     - nodejs_version: "14"
   install:
-    secure: yarn
+    yarn
   test_script:
-    secure: yarn test
+    yarn test
   build: off
 before_test:
   - SET PGUSER=postgres
@@ -12,4 +12,4 @@ before_test:
   - PATH = C:\Program Files\PostgreSQL\10\bin\;%PATH%
   - createdb testdb
 services:
-  - postgresql10
+  - postgresql101
