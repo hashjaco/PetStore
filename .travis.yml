@@ -29,5 +29,5 @@ addons:
       - postgresql-12
       - postgresql-client-12
 before_install: 
-  - sudo cp /etc/postgresql/{12}/main/pg_hba.conf
+  - sudo cp /etc/postgresql/12/main/pg_hba.conf
   - sudo /etc/init.d/postgresql restart
