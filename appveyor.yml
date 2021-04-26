@@ -1,8 +1,0 @@
-environment:
-  matrix:
-    - nodejs_version: "14"
-  install:
-    secure: yarn
-  test_script:
-    secure: node -v && npm -v && yarn test
-  build: off

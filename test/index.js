@@ -1,4 +1,5 @@
 import { expect, server, BASE_URL } from './setup';
+import { petfinderClientId, petfinderClientSecret } from '../src/settings';
 
 // Make a request to get the base endpoint and assert
 //  that the res.body object has a message key with a value
@@ -12,6 +13,21 @@ describe('Index page test', () => {
         expect(res.status).to.equal(200);
         expect(res.body.message).to.equal(
           'Environment variable is coming across.'
+        );
+        done();
+      });
+  });
+});
+
+describe('Auth page test', () => {
+  it('gets auth url', (done) => {
+    server
+      .get(`${BASE_URL}/auth`)
+      .expect(200)
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body.message).to.equal(
+          `ID: ${petfinderClientId}   SECRET: ${petfinderClientSecret}`
         );
         done();
       });
