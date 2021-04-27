@@ -1,7 +1,11 @@
 import express from 'express';
-import { testEnvironmentVariable } from '../settings';
+import { getToken, indexPage, getMessages, addMessage } from '../controllers';
+import { modifyMessage, performAsyncAction } from '../middleware';
 
 const indexRouter = express.Router();
-indexRouter.get('/', (req, res) => res.status(200).json({ message: testEnvironmentVariable }));
+indexRouter.get('/', indexPage);
+indexRouter.get('/auth', getToken);
+indexRouter.get('/messages', getMessages);
+indexRouter.post('/messages', modifyMessage, performAsyncAction, addMessage);
 
 export default indexRouter;

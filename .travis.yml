@@ -1,19 +1,38 @@
 language: node_js
 env:
-  global: 
-    - CC_TEST_REPORTER_ID=392946dccdecb72f47225f2717a76cf340775298cf237a7bd9cdd68f994a6957
+  global:
+  - CC_TEST_REPORTER_ID=392946dccdecb72f47225f2717a76cf340775298cf237a7bd9cdd68f994a6957
 matrix:
   include:
-    - node_js: '14'
+  - node_js: '14'
 cache:
-  directories: [node_modules]
+  directories:
+  - node_modules
 install: yarn
 after_success: yarn coverage
-before_script: 
-  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-  - chmod +x ./cc-test-reporter
-  - ./cc-test-reporter before-build
-script: 
-  - yarn test
-after_script: 
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESUL
+before_script:
+- psql -c 'create database testdb;' -U postgres
+- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+  > ./cc-test-reporter
+- chmod +x ./cc-test-reporter
+- "./cc-test-reporter before-build"
+script: yarn test
+after_script:
+- "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESUL"
+services:
+- postgresql
+addons:
+  postgresql: '10'
+  apt:
+    packages:
+    - postgresql-10
+    - postgresql-client-10
+before_install:
+- sudo cp /etc/postgresql/{9.6,10}/main/pg_hba.conf
+- sudo /etc/init.d/postgresql restart
+deploy:
+  provider: heroku
+  app:
+    master: pawper
+  api_key:
+    secure: SH2j1UlGqRnCTfvBZSD14Ag1V6XWGaq9YkZsD36jz9sw5TojNW3+9sjE+KXFxppCg3JcAFFQsZScE+fKQrRnoj52fe+POmGNKZO6CfxHN2L/FqRV36PdUpj7qFP8U9devdYlVhhSgfCJp9EcsMTQ6kBZExKlCedfwMdqwpamjb7Hh+dEkQvMiL7XewAxqKI0b1Cokh+Ui2WbaEy/1k3I2ngTqez6v+XJovSmGATWUt/TRcbLNRjRftB0JFHUBMT9NMlV45vPc2ZAt/SVGmzvAMuH9hiAbsKGW5KVkNpePVnbX/SuR4nOphv3mZEletC2O5yIN5Ib4H2onmpGqOk+Qpt+p8kcvcHuHSiZ9RXymd0FER/Vm3HWpoNUjTOATfYLQXmPhFzub5SNzGxb4m+xAAko9HOjPEsdRF8Nd4ewVzkXUX9b7+s+gKq/UsN335fK80GQvPmBPJp6fg/9aIqb9AFl3RCqcAu838Of6cvey8hQBq0ZPeZ7FHfoTrJeybchAidg015rerxUTpBvi9utp3J+JLhGVPmq0D8DVveQ0ADEH0siqymEbC6sHY3l9LDRcDRuh5Nq8BEP9ISEUB2ddoM/QjDdMUrG0SdT38JC3lwZkb7rHKPE+jnOqlSErBx3ggtp6SqICdSEowGSffaStTYC4lJgtlNfqDIri1XQcKc=
