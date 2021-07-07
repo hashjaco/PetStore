@@ -1,0 +1,6 @@
+[submodule "petstore-api"]
+  path = petstore-api
+  url = git@github.com:hashjaco/petstore-api.git
+[submodule "petstore-app-v2"]
+  path = petstore-app-v2
+  url = git@github.com:hasjaco/petstore-app.git
